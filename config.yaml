@@ -236,13 +236,15 @@ proxy-groups:
       - germany
       - hongkong
     url: 'http://www.gstatic.com/generate_204'
-    interval: 300
+    interval: 30
 
   # 代理节点选择
   - name: "PROXY"
     type: select
     proxies:
       - Fallback
+      - germany
+      - hongkong
 
   # 白名单模式 PROXY, 黑名单模式 DIRECT, 不知道别动
   - name: "MATCH"
@@ -256,6 +258,7 @@ proxy-groups:
     type: select
     proxies:
       - PROXY
+      - hongkong
 
   # 中国流媒体服务（面向海外版本）
   - name: "StreamingSE"
@@ -321,10 +324,41 @@ rule-providers:
     url: https://cdn.jsdelivr.net/gh/DivineEngine/Profiles/Clash/RuleSet/Extra/ChinaIP.yaml
     interval: 86400
 
+  LoyalsoldierReject:
+    type: http
+    behavior: domain
+    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
+    path: ./ruleset/LoyalsoldierReject.yaml
+    interval: 86400
+    
+#   LoyalsoldierProxy:
+#     type: http
+#     behavior: domain
+#     url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt"
+#     path: ./ruleset/LoyalsoldierProxy.yaml
+#     interval: 86400
+
+#   LoyalsoldierDirect:
+#     type: http
+#     behavior: domain
+#     url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt"
+#     path: ./ruleset/LoyalsoldierDirect.yaml
+#     interval: 86400
+
 # 规则
 rules:
   # Unbreak
   - RULE-SET,Unbreak,DIRECT
+  
+  # 去广告
+  # - RULE-SET,LoyalsoldierReject,REJECT
+  # 附加
+  - DOMAIN-SUFFIX,8080.net,DIRECT
+  - DOMAIN-SUFFIX,ktsee.eu.org,DIRECT
+  - DOMAIN-SUFFIX,guidaodeng.com,DIRECT
+  - DOMAIN-SUFFIX,imgchr.com,DIRECT
+  - DOMAIN-SUFFIX,wemp.app,DIRECT
+  - DOMAIN,marketplace.visualstudio.com,PROXY
 
   # Global Area Network
 
